@@ -121,6 +121,34 @@ The React app will run on `http://localhost:3000`
 ### Frontend
 - React
 - Create React App
+- React Hook Form - [Documentation](https://react-hook-form.com/)
+- Material-UI (MUI)
+
+## Frontend Development Patterns
+
+### Form Handling
+This project uses **React Hook Form** with the `Controller` component pattern for form inputs. This pattern is preferred for better integration with Material-UI components and controlled form state management.
+
+Example:
+```jsx
+import { useForm, Controller } from 'react-hook-form';
+
+const { control, handleSubmit } = useForm();
+
+<Controller
+  name="email"
+  control={control}
+  rules={{ required: 'Email is required' }}
+  render={({ field }) => (
+    <TextField {...field} label="Email" />
+  )}
+/>
+```
+
+For more information, visit the [React Hook Form documentation](https://react-hook-form.com/).
+
+### Routing
+Application routes are defined in a centralized `routes.js` file as an enum for consistency and maintainability.
 
 ## Development
 
