@@ -1,21 +1,21 @@
-import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Container, Box, TextField, Button, Typography, Paper } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 function Login({ onLogin }) {
+
   const { control, handleSubmit, formState: { errors }, setError } = useForm();
 
-  const onSubmit = (data) => {
-    // Check if both email and password are correct
-    if (data.email === 'admin@example.com' && data.password === 'admin') {
-      // Login successful
-      onLogin({ firstName: 'Admin' });
-    } else {
-      // Login failed
-      setError('password', {
-        type: 'manual',
-        message: 'Credenciales inválidas',
+  const onSubmit = async(data) => {
+    try {
+      const res = await axios.post('http://localhost:3001/auth/login', {
+        ...data
       });
+      onLogin(res.data.user)
+    } catch (error) {
+      setError(error)
+      console.error(error)
     }
   };
 
@@ -37,7 +37,7 @@ function Login({ onLogin }) {
             <Controller
               name="email"
               control={control}
-              defaultValue=""
+              defaultValue="complete@cd.com"
               rules={{
                 required: 'El correo electrónico es requerido',
                 pattern: {
@@ -62,7 +62,7 @@ function Login({ onLogin }) {
             <Controller
               name="password"
               control={control}
-              defaultValue=""
+              defaultValue="Pass@123"
               rules={{
                 required: 'La contraseña es requerida',
               }}
@@ -87,6 +87,17 @@ function Login({ onLogin }) {
             >
               Iniciar sesión
             </Button>
+
+            <div>
+              <span>¿No tienes una cuenta?</span>
+              <NavLink
+                to='/register'
+
+                type='button'
+              >
+                Registrate
+              </NavLink>
+            </div>
           </Box>
         </Paper>
       </Box>

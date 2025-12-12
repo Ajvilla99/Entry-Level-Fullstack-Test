@@ -1,15 +1,15 @@
 import express from 'express';
-import * as authService from '../services/auth.service.js';
+import { AuthService } from '../services/auth.service.js';
 
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
   try {
-    const token = authService.generateToken();
-    res.json({ token });
+    const data = req.body
+    const response = await AuthService.login(data);
+    res.status(200).json(response);
   } catch (error) {
-    console.error('Error generating token:', error);
-    res.status(500).json({ error: 'Failed to generate token' });
+    res.status(400).json({ error: 'Invalid Credentials' });
   }
 });
 

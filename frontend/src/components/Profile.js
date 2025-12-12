@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Box, Button, Typography } from '@mui/material';
+import UpdateForm from './UpdateForm'
 
 function Profile({ user }) {
+
+  const [update, setUpdate] = useState(false);
+
+  console.log(update);
+  
+
   return (
     <Container maxWidth="sm">
       <Box
@@ -13,9 +20,11 @@ function Profile({ user }) {
         }}
       >
         <Typography component="h1" variant="h3" gutterBottom>
-          Hola {user.firstName}
+          Hola {user.firstname}
         </Typography>
         <Button
+          type='button'
+          onClick={() => setUpdate(!update)}
           variant="contained"
           size="large"
           sx={{ mt: 3 }}
@@ -30,6 +39,11 @@ function Profile({ user }) {
           Cerrar sesión
         </Button>
       </Box>
+      {
+        update && (
+          <UpdateForm  id={user.id}/>
+        )
+      }
     </Container>
   );
 }

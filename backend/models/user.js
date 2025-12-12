@@ -14,6 +14,30 @@ export default (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false
     },
+    firstname: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    lastname: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    typeId: {
+      type: DataTypes.INTEGER(),
+      allowNull: true,
+    },
+    identification: {
+      type: DataTypes.STRING(15),
+      allowNull:true,
+    },
+    address: {
+      type: DataTypes.STRING(255),
+      allowNull:true,
+    },
+    phone: {
+      type: DataTypes.STRING(12),
+      allowNull:true,
+    },
     email: {
       type: DataTypes.STRING(255),
       allowNull: false
