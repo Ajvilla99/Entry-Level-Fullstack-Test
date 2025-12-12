@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Profile from './components/Profile';
 import { ROUTES } from './routes';
 import './App.css';
+import Register from './components/Register';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -15,14 +16,19 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route 
+        <Route
           path={ROUTES.HOME}
-          element={user ? <Navigate to={ROUTES.PROFILE} replace /> : <Login onLogin={handleLogin} />} 
+          element={user ? <Navigate to={ROUTES.PROFILE} replace /> : <Login onLogin={handleLogin} />}
         />
-        <Route 
+        <Route
+          path={ROUTES.REGISTER}
+          element={user ? <Navigate to={ROUTES.HOME} /> : <Register />}
+        />
+        <Route
           path={ROUTES.PROFILE}
-          element={user ? <Profile user={user} /> : <Navigate to={ROUTES.HOME} replace />} 
+          element={user ? <Profile user={user} /> : <Navigate to={ROUTES.HOME} replace />}
         />
+
       </Routes>
     </BrowserRouter>
   );

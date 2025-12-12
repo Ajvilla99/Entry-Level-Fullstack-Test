@@ -3,10 +3,12 @@ import express from 'express';
 import { sequelize } from './models/index.js';
 import usersController from './controllers/users.controller.js';
 import authController from './controllers/auth.controller.js';
+import cors from 'cors'
 
 const app = express();
 const port = process.env.PORT || 3001;
 
+app.use(cors() )
 app.use(express.json());
 
 app.get('/', (req, res) => {
