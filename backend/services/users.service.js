@@ -4,7 +4,7 @@ const { User } = db;
 
 export const getUser = async () => {
   try {
-    const users = await User.findOne({ where: { id }});
+    const users = await User.findOne({ where: { id } });
     return users;
   } catch (error) {
     console.error('Error fetching users from database:', error);
@@ -18,7 +18,16 @@ export const UserService = {
   },
 
   async getUserByEmail(email) {
-    return await User.findOne({ where: { email } })
+    const user = await User.findOne({ where: { email } })
+
+    console.log('getUserByEmail: ',user);
+    
+
+    if(!user) {
+      return null;
+    }
+
+    return user;
   },
 
   async createUser(data) {
