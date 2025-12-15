@@ -1,20 +1,23 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Container, Box, TextField, Button, Typography, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { NavLink } from 'react-router-dom';
-import apiClient from '../api/api-client';
+import { Container, Box, TextField, Button, Typography, Paper, FormControl, InputLabel, Select, MenuItem, Alert } from '@mui/material';
+import { Navigate, NavLink } from 'react-router-dom';
+import Swal from 'sweetalert2'
+import axios from 'axios';
 
 function Register() {
 
   const { control, handleSubmit, formState: { errors }, setError } = useForm();
 
   const onSubmit = async (data) => {
-
-    const res = await apiClient.post(data)
     try {
-
+      const { data: { msg } } = await axios.post('http://localhost:3001/users', data)
+      Swal.fire({
+        title: msg,
+      });
     } catch (error) {
       setError(error);
+      throw new Error('Fallo')
     }
   };
 
