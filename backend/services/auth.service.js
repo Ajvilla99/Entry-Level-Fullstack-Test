@@ -36,6 +36,7 @@ export const AuthService = {
         msg: 'Login Sucesfull',
         token: this.generateToken(),
         user: {
+          id,
           firstname: user.firstname,
           lastname: user.lastname,
         }
