@@ -13,8 +13,12 @@ function Login({ onLogin }) {
         ...data
       });
       onLogin(res.data.user)
+      return res.data.msg
     } catch (error) {
-      setError(error)
+      setError('email', {
+        type: 'manual',
+        message: 'Credenciales incorrectas',
+      });
       console.error(error)
     }
   };
