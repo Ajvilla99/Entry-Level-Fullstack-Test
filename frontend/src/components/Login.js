@@ -7,7 +7,7 @@ function Login({ onLogin }) {
 
   const { control, handleSubmit, formState: { errors }, setError } = useForm();
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     try {
       const res = await axios.post('http://localhost:3001/auth/login', {
         ...data
@@ -33,7 +33,9 @@ function Login({ onLogin }) {
           <Typography component="h1" variant="h5" align="center" gutterBottom>
             Iniciar sesión
           </Typography>
-          <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+          <Box component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{ mt: 1 }}>
             <Controller
               name="email"
               control={control}
