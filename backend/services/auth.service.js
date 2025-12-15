@@ -22,9 +22,7 @@ export const AuthService = {
 
   async login(data) {
     
-    try {
       const user = await UserService.getUserByEmail(data.email)
-      
       if (!user) 'invalid credentials';
 
       const isValidPassword = bcrypt.compare(data.password, user.password);
@@ -39,10 +37,7 @@ export const AuthService = {
           id,
           firstname: user.firstname,
           lastname: user.lastname,
-        }
       }
-    } catch (error) {
-      console.error(error)
     }
   }
 }
