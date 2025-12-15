@@ -10,14 +10,27 @@ function Register() {
   const { control, handleSubmit, formState: { errors }, setError } = useForm();
 
   const onSubmit = async (data) => {
+    console.log(data);
+
     try {
-      const { data: { msg } } = await axios.post('http://localhost:3001/users', data)
+      const response = await axios.post('http://localhost:3001/users', data);
+      const { msg } = response.data;
+
       Swal.fire({
         title: msg,
       });
+
     } catch (error) {
-      setError(error);
-      throw new Error('Fallo')
+      const errorMessage = error.response?.data?.message || "Fallo al registrar";
+
+      setError("form", {
+        type: "manual",
+        message: errorMessage
+      });
+
+
+      console.error('Error during submission:', error);
+      throw new Error('Fallo');
     }
   };
 
