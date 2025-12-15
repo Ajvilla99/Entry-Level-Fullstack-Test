@@ -13,6 +13,10 @@ export const getUser = async () => {
 };
 
 export const UserService = {
+  async getUserById(id) {
+    return await User.findByPk(id);
+  },
+
   async getUserByEmail(email) {
     return await User.findOne({ where: { email } })
   },
@@ -23,7 +27,6 @@ export const UserService = {
 
   async updateUser(id, data) {
     const user = await User.findByPk(id)
-    console.log(user);
 
     if (!user) return null;
 
