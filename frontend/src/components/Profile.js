@@ -6,9 +6,6 @@ function Profile({ user }) {
 
   const [update, setUpdate] = useState(false);
 
-  console.log(update);
-  
-
   return (
     <Container maxWidth="sm">
       <Box
@@ -41,7 +38,7 @@ function Profile({ user }) {
       </Box>
       {
         update && (
-          <UpdateForm  id={user.id}/>
+          <UpdateForm  id={user.id} />
         )
       }
     </Container>
