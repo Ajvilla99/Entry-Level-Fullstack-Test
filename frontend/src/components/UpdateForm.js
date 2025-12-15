@@ -1,26 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Box, TextField, Button, Typography, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
-import { Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 function UpdateForm({ id }) {
+
+    const url = `http://localhost:3001/users/${id}`
+
 
     const { control, handleSubmit, formState: { errors }, setError } = useForm();
 
     const [dataUser, setDataUser] = useState(null)
 
-    const getDataUser = async() => {
-        const data = await axios.get('http://localhost:3001/users', id)
+    const getDataUser = async (id) => {
+        try {
+            const { data } = await axios.get(url)
+            setDataUser(data)
+            return;
+        } catch (error) {
+            throw new Error(error)
+        }
     }
 
-    useEffect( async () => {
-        const res = await getDataUser()
-        setDataUser(res)
-    }),[]
+    const onSubmit = async (data) => {
+        try {
+            const res = await axios.post(url, data)
+            alert('Actualizado correctamente')
+            return res;
+        } catch (error) {
+            throw new Error({
+                message: 'Error al actualizar los datos'
+            })
+        }
+    }
+
+    useEffect(() => {
+        getDataUser(id);
+    }, [])
+
+    if (!dataUser) return <p></p>
 
     return (
         <Container maxWidth="sm">
             <Box
+                component="form"
+                onSubmit={handleSubmit(onSubmit)}
                 sx={{
                     marginTop: 8,
                     display: 'flex',
@@ -32,7 +56,7 @@ function UpdateForm({ id }) {
                 <Controller
                     name="firstname"
                     control={control}
-                    defaultValue={data?.firstname ?? ''}
+                    defaultValue={dataUser.firstname}
                     rules={{
                         required: 'El campo nombre es requerido',
                     }}
@@ -53,7 +77,7 @@ function UpdateForm({ id }) {
                 <Controller
                     name="lastname"
                     control={control}
-                    defaultValue={ data?.lastname ?? '' }
+                    defaultValue={dataUser.lastname}
                     rules={{
                         required: 'El campo apellido es requerido',
                         minLength: 2
@@ -76,7 +100,7 @@ function UpdateForm({ id }) {
                 <Controller
                     name="email"
                     control={control}
-                    defaultValue={ data?.email ?? '' }
+                    defaultValue={dataUser.email}
                     rules={{
                         required: 'El correo electrónico es requerido',
                         pattern: {
@@ -98,10 +122,10 @@ function UpdateForm({ id }) {
                         />
                     )}
                 />
-                <Controller
+                {/* <Controller
                     name="password"
                     control={control}
-                    defaultValue={ data?.password ?? '' }
+                    defaultValue={''}
                     rules={{
                         required: 'La contraseña es requerida',
                     }}
@@ -117,12 +141,12 @@ function UpdateForm({ id }) {
                             helperText={errors.password?.message}
                         />
                     )}
-                />
+                /> */}
 
                 <Controller
                     name="typeId"
                     control={control}
-                    defaultValue={ data?.typeI ?? '' }
+                    defaultValue={dataUser.typeId}
                     rules={{
                         required: 'La contraseña es requerida'
                     }}
@@ -147,7 +171,7 @@ function UpdateForm({ id }) {
                 <Controller
                     name="identification"
                     control={control}
-                    defaultValue={ data?.identificatio ?? '' }
+                    defaultValue={dataUser.identification}
                     rules={{
                         required: 'El campo identeificacion es requerido',
                     }}
@@ -167,7 +191,7 @@ function UpdateForm({ id }) {
                 <Controller
                     name="phone"
                     control={control}
-                    defaultValue={ data?.phone ?? '' }
+                    defaultValue={dataUser.phone}
                     rules={{
                         required: 'El campo telefono es requerido',
                     }}
@@ -188,7 +212,7 @@ function UpdateForm({ id }) {
                 <Controller
                     name="address"
                     control={control}
-                    defaultValue={ data?.addre ?? '' }
+                    defaultValue={dataUser.address}
                     rules={{
                         required: 'El campo direccion es requerido',
                     }}
@@ -212,20 +236,6 @@ function UpdateForm({ id }) {
                     sx={{ mt: 3, mb: 2 }}
                 >
                     Actualizar Perfil
-                </Button>
-                <Button
-                    variant="contained"
-                    size="large"
-                    sx={{ mt: 3 }}
-                >
-                    Actualizar perfil
-                </Button>
-                <Button
-                    variant="outlined"
-                    size="large"
-                    sx={{ mt: 2 }}
-                >
-                    Cerrar sesión
                 </Button>
             </Box>
         </Container>
